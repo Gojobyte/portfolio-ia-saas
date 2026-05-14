@@ -54,7 +54,12 @@ export default function CVPage() {
                 <a href="https://portfolio-ia-saas.vercel.app" className="text-indigo-400 hover:underline print:text-black print:no-underline">Portfolio</a>
               </div>
               <div className="mt-3">
-                <PrintButton />
+                <a
+                  href="/cv/print"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-full bg-indigo-500 hover:bg-indigo-400 text-white transition-colors"
+                >
+                  Version PDF
+                </a>
               </div>
             </div>
           </div>

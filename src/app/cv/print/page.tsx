@@ -73,7 +73,7 @@ export default function CVPrintPage() {
         {/* Candidature */}
         <div className="mb-6 p-3 rounded-lg bg-indigo-50 border border-indigo-200">
           <p className="text-sm text-indigo-800 font-semibold">Candidature : Stage / Alternance &mdash; Developpeur Full Stack IA / SaaS</p>
-          <p className="text-sm text-gray-600">Disponibilite immediate &bull; 6 mois &bull; Teletravail hybride Paris compatible</p>
+          <p className="text-sm text-gray-600">Disponibilite immediate &bull; 6 mois &bull; Teletravail hybride Paris compatible &bull; <a href="https://portfolio-ia-saas.vercel.app" className="text-indigo-700 font-medium underline">portfolio-ia-saas.vercel.app</a></p>
         </div>
 
         <div className="grid grid-cols-3 gap-8">

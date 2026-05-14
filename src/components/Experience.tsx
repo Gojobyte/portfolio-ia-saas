@@ -1,114 +1,84 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Flame, Code2, Layers, Database, Bot } from "lucide-react";
-
-const stats = [
-  { value: "24+", label: "Repositories GitHub" },
-  { value: "170+", label: "Commits" },
-  { value: "10+", label: "Projets deployes" },
-  { value: "6+", label: "Technologies maitrisees" },
-];
+import { GraduationCap } from "lucide-react";
 
 const highlights = [
   {
-    icon: Layers,
+    emoji: "🚀",
     title: "SaaS complet de A a Z",
-    desc: "Task SaaS : Kanban drag & drop, auth multi-utilisateurs, Prisma + PostgreSQL. Architecture production-ready deployee sur Vercel.",
+    desc: "TaskFlow : Kanban drag & drop, auth multi-utilisateurs, Prisma + PostgreSQL. Deployee en production.",
   },
   {
-    icon: Bot,
+    emoji: "🤖",
     title: "IA & collaboration temps reel",
-    desc: "Gost AI : application IA avec Liveblocks pour la collaboration en temps reel, tests automatises avec Vitest, integration agents IA.",
+    desc: "Gost AI : Liveblocks pour le temps reel, tests Vitest, integration agents IA et Claude.",
   },
   {
-    icon: Database,
+    emoji: "🏗️",
     title: "Architecture microservices",
-    desc: "CHADIA Projects : 3 microservices (Auth, Tender, Notification), API Gateway, PostgreSQL, Redis, Docker, pattern Outbox event-driven.",
+    desc: "CHADIA Projects : 3 services, API Gateway, PostgreSQL, Redis, Docker, pattern event-driven.",
   },
   {
-    icon: Code2,
-    title: "Dashboards & e-commerce",
-    desc: "E-Commerce Dashboard avec Recharts, NextAuth, Prisma. Hub Store avec integration Stripe. Interfaces riches et performantes.",
+    emoji: "📊",
+    title: "Dashboards & analytics",
+    desc: "Plusieurs dashboards avec Recharts, NextAuth, Prisma. E-commerce, stock, facturation.",
   },
   {
-    icon: Flame,
+    emoji: "⚡",
     title: "IA au quotidien",
-    desc: "J'utilise Claude Code, GitHub Copilot et les outils IA pour coder plus vite. Ce portfolio a ete construit avec l'assistance de Claude.",
+    desc: "Claude Code, GitHub Copilot et outils IA pour coder plus vite. Ce portfolio a ete construit avec Claude.",
   },
 ];
 
 const education = [
   {
-    title: "Formation continue - Developpement Web",
+    title: "Developpement Web",
     school: "Dyma, OpenClassroom",
     period: "2020 - 2021",
-    desc: "Specialisation en developpement web moderne : React, Node.js, bases de donnees, TypeScript.",
+    desc: "React, Node.js, TypeScript, bases de donnees",
   },
   {
     title: "Ecole d'ingenieur",
     school: "ISGA",
     period: "2016 - 2020",
-    desc: "Formation ingenieur avec specialisation informatique.",
+    desc: "Informatique et ingenierie",
   },
 ];
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24 px-6 bg-card-bg/50">
-      <div className="max-w-6xl mx-auto">
+    <section id="parcours" className="py-32 px-6">
+      <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Ce que j&apos;ai <span className="text-accent-light">construit</span>
+          <p className="text-accent-light font-mono text-sm mb-4">// parcours</p>
+          <h2 className="text-3xl sm:text-4xl font-bold">
+            Ce que j&apos;ai <span className="text-gradient">construit</span>
           </h2>
-          <p className="text-muted max-w-xl mx-auto">
-            Je prefere montrer ce que je sais faire plutot que de lister des
-            titres. Voici mes realisations concretes.
-          </p>
         </motion.div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((s, i) => (
-            <motion.div
-              key={s.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="text-center p-6 rounded-xl border border-card-border bg-background"
-            >
-              <div className="text-3xl font-bold text-accent-light mb-1">
-                {s.value}
-              </div>
-              <div className="text-sm text-muted">{s.label}</div>
-            </motion.div>
-          ))}
-        </div>
-
         {/* Highlights */}
-        <div className="space-y-6 mb-16">
+        <div className="space-y-4 mb-20">
           {highlights.map((h, i) => (
             <motion.div
               key={h.title}
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="flex gap-4 p-6 rounded-xl border border-card-border bg-background hover:border-accent/40 transition-colors"
+              className="group flex gap-5 p-6 rounded-2xl glass-card hover:border-accent/20 transition-all"
             >
-              <h.icon
-                className="text-accent-light shrink-0 mt-1"
-                size={24}
-              />
+              <span className="text-2xl shrink-0 mt-0.5">{h.emoji}</span>
               <div>
-                <h3 className="font-semibold text-lg mb-1">{h.title}</h3>
+                <h3 className="font-semibold text-lg mb-1 group-hover:text-accent-light transition-colors">
+                  {h.title}
+                </h3>
                 <p className="text-muted text-sm leading-relaxed">{h.desc}</p>
               </div>
             </motion.div>
@@ -116,12 +86,17 @@ export function Experience() {
         </div>
 
         {/* Education */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h3 className="flex items-center gap-2 text-xl font-semibold mb-8">
             <GraduationCap className="text-accent-light" size={22} />
             Formation
           </h3>
-          <div className="relative border-l-2 border-card-border pl-8 space-y-10">
+          <div className="relative border-l border-card-border pl-8 space-y-8">
             {education.map((e, i) => (
               <motion.div
                 key={i}
@@ -131,17 +106,15 @@ export function Experience() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 className="relative"
               >
-                <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-accent border-2 border-background" />
-                <div className="text-sm text-accent-light font-mono mb-1">
-                  {e.period}
-                </div>
-                <h4 className="text-lg font-semibold">{e.title}</h4>
-                <div className="text-muted text-sm mb-1">{e.school}</div>
-                <p className="text-sm text-muted">{e.desc}</p>
+                <div className="absolute -left-[33px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent" />
+                <div className="text-sm text-accent-light font-mono mb-1">{e.period}</div>
+                <h4 className="font-semibold">{e.title}</h4>
+                <div className="text-muted text-sm">{e.school}</div>
+                <p className="text-muted text-sm mt-1">{e.desc}</p>
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

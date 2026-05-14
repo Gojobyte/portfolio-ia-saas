@@ -1,68 +1,99 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Sparkles, Rocket, Brain, Code2 } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 
-const strengths = [
-  {
-    icon: Rocket,
-    title: "Execution rapide",
-    desc: "J'aime construire vite, tester et iterer. Chaque idee peut devenir realite en quelques jours.",
-  },
-  {
-    icon: Brain,
-    title: "IA comme levier",
-    desc: "J'utilise Claude, Copilot et les outils IA au quotidien pour coder plus vite et plus intelligemment.",
-  },
-  {
-    icon: Code2,
-    title: "Full Stack moderne",
-    desc: "Next.js, TypeScript, Prisma, PostgreSQL : je maitrise toute la chaine, du front au back.",
-  },
-  {
-    icon: Sparkles,
-    title: "Force de proposition",
-    desc: "Curieux et debrouillard, je propose des idees produit, techniques et UX a chaque sprint.",
-  },
-];
+function Counter({ end, label, suffix = "" }: { end: number; label: string; suffix?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const duration = 1500;
+    const step = end / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 16);
+    return () => clearInterval(timer);
+  }, [inView, end]);
+
+  return (
+    <div ref={ref} className="text-center">
+      <div className="text-4xl sm:text-5xl font-bold text-gradient mb-2">
+        {count}{suffix}
+      </div>
+      <div className="text-sm text-muted">{label}</div>
+    </div>
+  );
+}
 
 export function About() {
   return (
-    <section id="apropos" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-32 px-6">
+      <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
+          className="grid lg:grid-cols-2 gap-16 items-center mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            A propos de <span className="text-accent-light">moi</span>
-          </h2>
-          <p className="text-muted max-w-2xl mx-auto">
-            Developpeur passione par le code et les defis techniques, je
-            cherche un environnement dynamique ou les idees deviennent
-            rapidement realite. Avec +3 ans d&apos;experience en entreprise, je suis
-            pret a avoir un vrai impact sur votre produit SaaS.
-          </p>
+          <div>
+            <p className="text-accent-light font-mono text-sm mb-4">// a propos</p>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-6 leading-tight">
+              Je construis des produits,<br />
+              <span className="text-gradient">pas juste du code.</span>
+            </h2>
+            <div className="space-y-4 text-muted leading-relaxed">
+              <p>
+                Developpeur Full Stack passionne, je combine une expertise technique solide
+                avec une vraie vision produit. J&apos;aime comprendre le &quot;pourquoi&quot; avant
+                d&apos;ecrire la premiere ligne de code.
+              </p>
+              <p>
+                Mon approche : livrer vite, iterer souvent, et utiliser l&apos;IA comme
+                accelerateur. Chaque projet que je construis est pense pour etre scalable,
+                maintenable et agreable a utiliser.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { title: "Next.js & React", desc: "Applications SSR/SSG performantes avec App Router" },
+              { title: "PostgreSQL & Prisma", desc: "Modelisation de donnees robuste et requetes optimisees" },
+              { title: "TypeScript", desc: "Code type de bout en bout, du front au back" },
+              { title: "IA & Automatisation", desc: "Claude, Copilot et outils IA au quotidien" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="p-5 rounded-2xl glass-card hover:border-accent/20 transition-all"
+              >
+                <h3 className="text-sm font-semibold text-foreground mb-1.5">{item.title}</h3>
+                <p className="text-xs text-muted leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {strengths.map((s, i) => (
-            <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="p-6 rounded-xl bg-card-bg border border-card-border hover:border-accent/40 transition-colors"
-            >
-              <s.icon className="text-accent-light mb-4" size={28} />
-              <h3 className="font-semibold text-lg mb-2">{s.title}</h3>
-              <p className="text-muted text-sm leading-relaxed">{s.desc}</p>
-            </motion.div>
-          ))}
+        {/* Counters */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-y border-card-border">
+          <Counter end={24} suffix="+" label="Projets realises" />
+          <Counter end={170} suffix="+" label="Commits GitHub" />
+          <Counter end={12} suffix="+" label="Technologies" />
+          <Counter end={10} suffix="+" label="Projets deployes" />
         </div>
       </div>
     </section>

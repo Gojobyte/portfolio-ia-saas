@@ -1,103 +1,135 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons";
 
+const roles = [
+  "Full Stack Developer",
+  "Next.js Expert",
+  "TypeScript Enthusiast",
+  "SaaS Builder",
+  "AI-Powered Coder",
+];
+
 export function Hero() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section
-      id="accueil"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--accent)_0%,_transparent_50%)] opacity-15" />
+    <section id="accueil" className="relative min-h-screen flex items-center justify-center overflow-hidden noise grid-bg">
+      {/* Orbs */}
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent/20 rounded-full blur-[128px] animate-pulse" />
+      <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-purple-500/15 rounded-full blur-[128px] animate-pulse" style={{ animationDelay: "1s" }} />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="inline-block mb-6 px-4 py-2 rounded-full border border-accent/30 bg-accent/5 text-accent-light text-sm font-mono">
-            Disponible en stage / alternance
-          </div>
+          {/* Status badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="inline-flex items-center gap-2 mb-8 px-5 py-2.5 rounded-full glass-card"
+          >
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-sm text-muted">Disponible pour collaborer</span>
+          </motion.div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-            Adoum Salah
+          {/* Name */}
+          <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight leading-none mb-6">
+            <span className="text-foreground">Adoum</span>
             <br />
-            <span className="text-accent-light">
-              Developpeur Full Stack
-            </span>
-            <br />
-            <span className="text-muted text-3xl sm:text-4xl lg:text-5xl">
-              IA & SaaS
-            </span>
+            <span className="text-gradient">Salah</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-muted max-w-2xl mx-auto mb-8 leading-relaxed">
-            Je construis des applications SaaS performantes avec{" "}
-            <span className="text-foreground font-medium">Next.js</span>,{" "}
-            <span className="text-foreground font-medium">PostgreSQL</span> et
-            l&apos;IA comme levier de productivite. J&apos;aime livrer vite, experimenter et
-            avoir un vrai impact produit.
+          {/* Animated role */}
+          <div className="h-10 mb-8 overflow-hidden">
+            <motion.div
+              key={roleIndex}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -40, opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="text-xl sm:text-2xl font-mono text-accent-light"
+            >
+              {roles[roleIndex]}
+            </motion.div>
+          </div>
+
+          {/* Bio */}
+          <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
+            Je concois des applications web modernes et performantes.
+            Specialise en <span className="text-foreground">Next.js</span>,{" "}
+            <span className="text-foreground">TypeScript</span> et{" "}
+            <span className="text-foreground">PostgreSQL</span>, j&apos;utilise
+            l&apos;IA pour livrer plus vite et mieux.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
             <a
               href="#projets"
-              className="px-8 py-3 bg-accent hover:bg-accent-light text-white rounded-lg font-medium transition-colors"
+              className="group px-8 py-3.5 bg-accent hover:bg-accent-light text-white rounded-full font-medium transition-all hover:shadow-[0_0_30px_-5px_var(--accent)] flex items-center gap-2"
             >
-              Voir mes projets
+              Decouvrir mes projets
+              <ArrowDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
             </a>
             <a
               href="#contact"
-              className="px-8 py-3 border border-card-border hover:border-accent-light text-foreground rounded-lg font-medium transition-colors"
+              className="px-8 py-3.5 rounded-full font-medium glass-card text-foreground hover:border-accent/30 transition-all"
             >
               Me contacter
             </a>
           </div>
 
-          <div className="flex items-center justify-center gap-6">
-            <a
-              href="https://github.com/Gojobyte"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted hover:text-accent-light transition-colors"
-              aria-label="GitHub"
-            >
-              <GithubIcon size={22} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/adoum-salah-101221232/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted hover:text-accent-light transition-colors"
-              aria-label="LinkedIn"
-            >
-              <LinkedinIcon size={22} />
-            </a>
-            <a
-              href="mailto:sadoumachi@gmail.com"
-              className="text-muted hover:text-accent-light transition-colors"
-              aria-label="Email"
-            >
-              <Mail size={22} />
-            </a>
+          {/* Social */}
+          <div className="flex items-center justify-center gap-5">
+            {[
+              { href: "https://github.com/Gojobyte", icon: <GithubIcon size={20} />, label: "GitHub" },
+              { href: "https://www.linkedin.com/in/adoum-salah-101221232/", icon: <LinkedinIcon size={20} />, label: "LinkedIn" },
+              { href: "mailto:sadoumachi@gmail.com", icon: <Mail size={20} />, label: "Email" },
+            ].map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                aria-label={s.label}
+                className="w-11 h-11 rounded-full glass-card flex items-center justify-center text-muted hover:text-accent-light hover:border-accent/30 transition-all"
+              >
+                {s.icon}
+              </a>
+            ))}
           </div>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <a href="#apropos" aria-label="Scroll down">
-            <ArrowDown size={20} className="text-muted animate-bounce" />
-          </a>
-        </motion.div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <div className="w-5 h-8 rounded-full border border-card-border flex justify-center pt-1.5">
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-1 h-1 rounded-full bg-accent-light"
+          />
+        </div>
+      </motion.div>
     </section>
   );
 }

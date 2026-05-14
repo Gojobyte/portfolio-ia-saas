@@ -188,7 +188,7 @@ export default function CVPage() {
               <div>
                 <p className="text-xs text-zinc-500 mb-2 font-medium uppercase tracking-wider">IA & productivite</p>
                 <div className="flex flex-wrap">
-                  {["Claude Code", "GitHub Copilot", "Prompt Engineering", "Liveblocks"].map((s) => <Tag key={s}>{s}</Tag>)}
+                  {["Claude Code", "GitHub Copilot", "Hermes (LLM)", "VPS Config", "Prompt Engineering", "Liveblocks"].map((s) => <Tag key={s}>{s}</Tag>)}
                 </div>
               </div>
             </Section>

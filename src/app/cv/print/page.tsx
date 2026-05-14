@@ -191,7 +191,7 @@ export default function CVPrintPage() {
               <div>
                 <p className="text-[10px] text-gray-500 mb-1 font-bold uppercase tracking-wider">IA & productivite</p>
                 <div className="flex flex-wrap">
-                  {["Claude Code", "GitHub Copilot", "Prompt Engineering", "Liveblocks"].map((s) => <Tag key={s}>{s}</Tag>)}
+                  {["Claude Code", "GitHub Copilot", "Hermes (LLM)", "VPS Config", "Prompt Engineering", "Liveblocks"].map((s) => <Tag key={s}>{s}</Tag>)}
                 </div>
               </div>
             </Section>

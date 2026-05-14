@@ -27,7 +27,7 @@ const highlights = [
   {
     emoji: "⚡",
     title: "IA au quotidien",
-    desc: "Claude Code, GitHub Copilot et outils IA pour coder plus vite. Ce portfolio a ete construit avec Claude.",
+    desc: "Claude Code, GitHub Copilot, Hermes (LLM) et configuration de VPS pour heberger des modeles IA. Ce portfolio a ete construit avec Claude.",
   },
 ];
 

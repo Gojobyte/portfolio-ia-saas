@@ -25,6 +25,8 @@ const stack = [
   { name: "CI/CD", category: "DevOps" },
   { name: "Claude Code", category: "IA" },
   { name: "GitHub Copilot", category: "IA" },
+  { name: "Hermes (LLM)", category: "IA" },
+  { name: "VPS Config", category: "IA" },
   { name: "Liveblocks", category: "IA" },
   { name: "Stripe", category: "Services" },
   { name: "Resend", category: "Services" },

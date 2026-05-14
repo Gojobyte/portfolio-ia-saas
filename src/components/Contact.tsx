@@ -44,12 +44,14 @@ export function Contact() {
           </a>
 
           <a
-            href="tel:+33781311541"
+            href="https://wa.me/33781311541"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-4 p-6 rounded-xl bg-card-bg border border-card-border hover:border-accent/40 transition-colors"
           >
             <Phone className="text-accent-light shrink-0" size={24} />
             <div>
-              <div className="text-sm text-muted">Telephone</div>
+              <div className="text-sm text-muted">WhatsApp uniquement</div>
               <div className="font-medium">07 81 31 15 41</div>
             </div>
           </a>

@@ -49,10 +49,11 @@ const projects = [
     highlight: true,
   },
   {
-    title: "CHADIA Projects",
-    desc: "Plateforme de marches publics en microservices : API Gateway + 3 services (Auth, Tender, Notification), event-driven avec Outbox pattern.",
+    title: "ONG CHADIA",
+    desc: "Site officiel de l'ONG CHADIA pour le developpement du Tchad : formation professionnelle, entrepreneuriat, sante, education. Architecture microservices en backend.",
     stack: ["Next.js", "PostgreSQL", "Redis", "Docker", "Prisma", "Resend"],
     github: "https://github.com/Gojobyte/chadia-projects",
+    live: "https://ong-chadia.com",
     icon: Database,
     category: "saas" as Category,
     highlight: true,

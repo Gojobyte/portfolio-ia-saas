@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PrintButton } from "@/components/PrintButton";
 
 export const metadata: Metadata = {
   title: "CV - Adoum Salah | Developpeur Full Stack IA / SaaS",
@@ -48,9 +49,12 @@ export default function CVPage() {
               <div>07 81 31 15 41 (WhatsApp)</div>
               <div>Ile-de-France</div>
               <div className="flex gap-3 mt-2">
-                <a href="https://github.com/Gojobyte" className="text-indigo-400 hover:underline">GitHub</a>
-                <a href="https://www.linkedin.com/in/adoum-salah-101221232/" className="text-indigo-400 hover:underline">LinkedIn</a>
-                <a href="https://portfolio-ia-saas.vercel.app" className="text-indigo-400 hover:underline">Portfolio</a>
+                <a href="https://github.com/Gojobyte" className="text-indigo-400 hover:underline print:text-black print:no-underline">GitHub</a>
+                <a href="https://www.linkedin.com/in/adoum-salah-101221232/" className="text-indigo-400 hover:underline print:text-black print:no-underline">LinkedIn</a>
+                <a href="https://portfolio-ia-saas.vercel.app" className="text-indigo-400 hover:underline print:text-black print:no-underline">Portfolio</a>
+              </div>
+              <div className="mt-3">
+                <PrintButton />
               </div>
             </div>
           </div>

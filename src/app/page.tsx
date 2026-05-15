@@ -9,7 +9,8 @@ import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { SectionReveal, CodeDivider } from "@/components/SectionReveal";
+import { SectionReveal } from "@/components/SectionReveal";
+import { Portal } from "@/components/Grid3D";
 
 export default function Home() {
   return (
@@ -20,23 +21,23 @@ export default function Home() {
       <Navbar />
       <main className="relative z-10">
         <Hero3D />
-        <CodeDivider />
+        <Portal />
         <SectionReveal>
           <About />
         </SectionReveal>
-        <CodeDivider />
+        <Portal />
         <SectionReveal>
           <Projects />
         </SectionReveal>
-        <CodeDivider />
+        <Portal />
         <SectionReveal>
           <Skills />
         </SectionReveal>
-        <CodeDivider />
+        <Portal />
         <SectionReveal>
           <Experience />
         </SectionReveal>
-        <CodeDivider />
+        <Portal />
         <SectionReveal>
           <Contact />
         </SectionReveal>

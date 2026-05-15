@@ -3,49 +3,45 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { GraduationCap } from "lucide-react";
-import { TiltCard } from "./TiltCard";
+import { FlipCard } from "./FlipCard";
+import { Grid3D } from "./Grid3D";
 
 const highlights = [
   {
     emoji: "🚀",
     title: "SaaS complet de A a Z",
-    desc: "TaskFlow : Kanban drag & drop, auth multi-utilisateurs, Prisma + PostgreSQL. Deployee en production.",
+    front: "TaskFlow : Kanban drag & drop, auth multi-utilisateurs, Prisma + PostgreSQL.",
+    back: "Architecture : Next.js 15 App Router, Prisma ORM, NextAuth v5 sessions, PostgreSQL, Tailwind CSS. Deploy Vercel. 8 commits, production-ready.",
   },
   {
     emoji: "🤖",
     title: "IA & collaboration temps reel",
-    desc: "Gost AI : Liveblocks pour le temps reel, tests Vitest, integration agents IA et Claude.",
+    front: "Gost AI : Liveblocks, tests automatises, integration agents IA et Claude.",
+    back: "51 commits. Vitest pour tests. Liveblocks pour le multi-curseur temps reel. shadcn/ui components. Claude AGENTS.md pour l'IA.",
   },
   {
     emoji: "🏗️",
     title: "Architecture microservices",
-    desc: "CHADIA Projects : 3 services, API Gateway, PostgreSQL, Redis, Docker, pattern event-driven.",
+    front: "CHADIA : 3 services, API Gateway, PostgreSQL, Redis, Docker.",
+    back: "112 commits. Auth + Tender + Notification services. Event-driven Outbox pattern. Docker Compose. JWT inter-service. Resend emails.",
   },
   {
     emoji: "📊",
     title: "Dashboards & analytics",
-    desc: "Plusieurs dashboards avec Recharts, NextAuth, Prisma. E-commerce, stock, facturation.",
+    front: "Dashboards avec Recharts, NextAuth, Prisma. E-commerce, stock, facturation.",
+    back: "5 dashboards differents. Recharts pour la dataviz. KPIs temps reel. Filtres dynamiques. Export donnees. Auth role-based.",
   },
   {
     emoji: "⚡",
-    title: "IA au quotidien",
-    desc: "Claude Code, GitHub Copilot, Hermes (LLM) et configuration de VPS pour heberger des modeles IA.",
+    title: "IA & VPS au quotidien",
+    front: "Claude Code, Copilot, Hermes LLM et configuration VPS pour modeles IA.",
+    back: "Ce portfolio = construit avec Claude. VPS configure pour heberger Hermes. Prompt engineering avance. Automatisation workflow dev.",
   },
 ];
 
 const education = [
-  {
-    title: "Developpement Web",
-    school: "Dyma, OpenClassroom",
-    period: "2020 - 2021",
-    desc: "React, Node.js, TypeScript, bases de donnees",
-  },
-  {
-    title: "Ecole d'ingenieur",
-    school: "ISGA",
-    period: "2016 - 2020",
-    desc: "Informatique et ingenierie",
-  },
+  { title: "Developpement Web", school: "Dyma, OpenClassroom", period: "2020 - 2021", desc: "React, Node.js, TypeScript, bases de donnees" },
+  { title: "Ecole d'ingenieur", school: "ISGA", period: "2016 - 2020", desc: "Informatique et ingenierie" },
 ];
 
 export function Experience() {
@@ -53,8 +49,9 @@ export function Experience() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
 
   return (
-    <section id="parcours" className="py-32 px-6" ref={ref} style={{ perspective: 1200 }}>
-      <div className="max-w-5xl mx-auto">
+    <section id="parcours" className="py-32 px-6 relative" ref={ref}>
+      <Grid3D />
+      <div className="max-w-5xl mx-auto relative z-10" style={{ perspective: 1200 }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -62,42 +59,60 @@ export function Experience() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-accent-light font-mono text-sm mb-4">// parcours</p>
-          <h2 className="text-3xl sm:text-4xl font-bold">
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="text-accent-light font-mono text-sm mb-4"
+          >
+            {`// parcours`}
+          </motion.p>
+          <h2 className="text-3xl sm:text-5xl font-bold">
             Ce que j&apos;ai <span className="text-gradient">construit</span>
           </h2>
         </motion.div>
 
-        {/* 3D Highlights */}
-        <div className="space-y-5 mb-20">
+        {/* 3D Flip Highlight Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
           {highlights.map((h, i) => {
-            const progress = useTransform(scrollYProgress, [0.1 + i * 0.08, 0.25 + i * 0.08], [0, 1]);
-            const x = useTransform(progress, [0, 1], [i % 2 === 0 ? -60 : 60, 0]);
-            const rotateY = useTransform(progress, [0, 1], [i % 2 === 0 ? -8 : 8, 0]);
-            const z = useTransform(progress, [0, 1], [-80, 0]);
+            const progress = useTransform(scrollYProgress, [0.05 + i * 0.06, 0.2 + i * 0.06], [0, 1]);
+            const z = useTransform(progress, [0, 1], [-120, 0]);
+            const rotateX = useTransform(progress, [0, 1], [25, 0]);
+            const rotateY = useTransform(progress, [0, 1], [i % 2 === 0 ? -15 : 15, 0]);
 
             return (
-              <TiltCard key={h.title} className="rounded-2xl" glare>
-                <motion.div
-                  style={{ x, rotateY, translateZ: z, transformStyle: "preserve-3d" }}
-                  className="group flex gap-5 p-7 rounded-2xl glass-card hover:border-accent/20 transition-all"
-                >
-                  <span className="text-3xl shrink-0 mt-0.5" style={{ transform: "translateZ(20px)" }}>{h.emoji}</span>
-                  <div style={{ transform: "translateZ(10px)" }}>
-                    <h3 className="font-semibold text-lg mb-1 group-hover:text-accent-light transition-colors">
-                      {h.title}
-                    </h3>
-                    <p className="text-muted text-sm leading-relaxed">{h.desc}</p>
-                  </div>
-                </motion.div>
-              </TiltCard>
+              <motion.div
+                key={h.title}
+                style={{ translateZ: z, rotateX, rotateY, transformStyle: "preserve-3d" }}
+                className="h-52"
+              >
+                <FlipCard
+                  className="w-full h-full"
+                  front={
+                    <>
+                      <span className="text-3xl mb-3 block">{h.emoji}</span>
+                      <h3 className="font-semibold text-base mb-2">{h.title}</h3>
+                      <p className="text-muted text-xs leading-relaxed">{h.front}</p>
+                      <div className="mt-auto pt-2">
+                        <span className="text-[10px] text-accent-light/40 font-mono">{"{ hover for details }"}</span>
+                      </div>
+                    </>
+                  }
+                  back={
+                    <>
+                      <p className="text-accent-light font-mono text-[10px] mb-2">{`// ${h.title}`}</p>
+                      <p className="text-xs text-muted leading-relaxed">{h.back}</p>
+                    </>
+                  }
+                />
+              </motion.div>
             );
           })}
         </div>
 
-        {/* Education */}
+        {/* Education - 3D Timeline */}
         <motion.div
-          initial={{ opacity: 0, rotateX: 10 }}
+          initial={{ opacity: 0, rotateX: 15 }}
           whileInView={{ opacity: 1, rotateX: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
@@ -111,13 +126,18 @@ export function Experience() {
             {education.map((e, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -30, rotateY: -5 }}
-                whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                initial={{ opacity: 0, x: -40, rotateY: -10, z: -60 }}
+                whileInView={{ opacity: 1, x: 0, rotateY: 0, z: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
+                transition={{ duration: 0.6, delay: i * 0.2 }}
+                style={{ transformStyle: "preserve-3d" }}
                 className="relative"
               >
-                <div className="absolute -left-[33px] top-1.5 w-3 h-3 rounded-full bg-accent shadow-[0_0_12px_var(--accent)]" />
+                <motion.div
+                  animate={{ boxShadow: ["0 0 6px rgba(99,102,241,0.3)", "0 0 12px rgba(99,102,241,0.6)", "0 0 6px rgba(99,102,241,0.3)"] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute -left-[33px] top-1.5 w-3 h-3 rounded-full bg-accent"
+                />
                 <div className="text-sm text-accent-light font-mono mb-1">{e.period}</div>
                 <h4 className="font-semibold">{e.title}</h4>
                 <div className="text-muted text-sm">{e.school}</div>

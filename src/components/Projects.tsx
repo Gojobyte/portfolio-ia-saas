@@ -180,7 +180,7 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative block overflow-hidden rounded-2xl glass-card p-8 hover:border-accent/30 transition-all h-full"
+                className="group relative block overflow-hidden rounded-2xl glass-card holo-card p-8 hover:border-accent/30 transition-all h-full"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 <div className="relative z-10">

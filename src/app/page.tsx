@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero3D } from "@/components/Hero3D";
-import { ParticleCanvas } from "@/components/ParticleCanvas";
+import { CodeRain } from "@/components/CodeRain";
+import { CursorTrail } from "@/components/CursorTrail";
 import { FloatingShapes } from "@/components/FloatingShapes";
 import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
@@ -11,8 +12,9 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="noise">
-      <ParticleCanvas />
+    <div className="noise scanline">
+      <CodeRain />
+      <CursorTrail />
       <FloatingShapes />
       <Navbar />
       <main className="relative z-10">

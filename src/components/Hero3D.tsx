@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 import { ArrowDown, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons";
+import { GlitchText } from "./GlitchText";
 
 const roles = [
   "Full Stack Developer",
@@ -158,11 +159,9 @@ export function Hero3D() {
             className="block text-6xl sm:text-8xl lg:text-[10rem] font-black tracking-tighter leading-none text-foreground"
             depth={10}
           />
-          <ExtrudedText
-            text="Salah"
-            className="block text-6xl sm:text-8xl lg:text-[10rem] font-black tracking-tighter leading-none text-gradient"
-            depth={12}
-          />
+          <div className="block text-6xl sm:text-8xl lg:text-[10rem] font-black tracking-tighter leading-none">
+            <GlitchText text="Salah" className="text-gradient" />
+          </div>
         </motion.div>
 
         {/* Animated role - 3D flip */}

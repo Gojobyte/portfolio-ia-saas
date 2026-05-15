@@ -3,6 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { TiltCard } from "./TiltCard";
+import { TerminalText } from "./GlitchText";
 
 function Counter({ end, label, suffix = "" }: { end: number; label: string; suffix?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -61,17 +62,25 @@ export function About() {
                 Je construis<br />des produits,<br />
                 <span className="text-gradient">pas juste du code.</span>
               </h2>
-              <div className="space-y-4 text-muted leading-relaxed">
-                <p>
-                  Developpeur Full Stack passionne, je combine une expertise technique solide
-                  avec une vraie vision produit. J&apos;aime comprendre le &quot;pourquoi&quot; avant
-                  d&apos;ecrire la premiere ligne de code.
-                </p>
-                <p>
-                  Mon approche : livrer vite, iterer souvent, et utiliser l&apos;IA comme
-                  accelerateur. Chaque projet est pense pour etre scalable,
-                  maintenable et agreable a utiliser.
-                </p>
+              {/* Terminal-style bio */}
+              <div className="p-5 rounded-xl bg-[#0a0a12] border border-card-border font-mono">
+                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-card-border">
+                  <div className="w-3 h-3 rounded-full bg-red-500/60" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/60" />
+                  <span className="text-xs text-muted ml-2">adoum@dev ~ $</span>
+                </div>
+                <TerminalText
+                  lines={[
+                    "// Qui suis-je ?",
+                    'const dev = "Full Stack passione"',
+                    'const vision = "Produit > Code"',
+                    'const methode = "Livrer vite, iterer"',
+                    'const ia = "Claude + Copilot + Hermes"',
+                    "// Chaque projet = scalable + maintenable",
+                    "export default { dev, vision, methode, ia }",
+                  ]}
+                />
               </div>
             </motion.div>
           </motion.div>

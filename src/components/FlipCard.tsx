@@ -28,15 +28,15 @@ export function FlipCard({ front, back, className = "" }: FlipCardProps) {
       >
         {/* Front */}
         <div
-          className="absolute inset-0 rounded-2xl glass-card holo-card p-7 flex flex-col"
-          style={{ backfaceVisibility: "hidden" }}
+          className="absolute inset-0 rounded-2xl p-7 flex flex-col holo-card"
+          style={{ backfaceVisibility: "hidden", background: "rgba(12, 12, 25, 0.92)", border: "1px solid rgba(255,255,255,0.08)" }}
         >
           {front}
         </div>
         {/* Back */}
         <div
-          className="absolute inset-0 rounded-2xl glass-card p-7 flex flex-col justify-center border border-accent/20"
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+          className="absolute inset-0 rounded-2xl p-7 flex flex-col justify-center"
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", background: "rgba(15, 12, 30, 0.95)", border: "1px solid rgba(99,102,241,0.25)" }}
         >
           {back}
         </div>

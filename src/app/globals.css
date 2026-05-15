@@ -8,7 +8,7 @@
   --accent-glow: rgba(99, 102, 241, 0.15);
   --card-bg: rgba(15, 15, 25, 0.8);
   --card-border: rgba(255, 255, 255, 0.06);
-  --muted: #71717a;
+  --muted: #9191a0;
   --glass: rgba(255, 255, 255, 0.03);
 }
 
@@ -72,9 +72,9 @@ body {
 
 /* Glass card */
 .glass-card {
-  background: var(--glass);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--card-border);
+  background: rgba(10, 10, 20, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Noise overlay */

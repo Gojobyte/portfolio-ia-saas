@@ -117,7 +117,7 @@ export function About() {
               <motion.div
                 whileHover={{ scale: 1.02, rotateY: 2 }}
                 transition={{ type: "spring", stiffness: 200 }}
-                className="p-5 rounded-xl bg-[#0a0a12] border border-card-border font-mono relative overflow-hidden"
+                className="p-5 rounded-xl bg-[#08081a]/95 border border-white/10 font-mono relative overflow-hidden"
                 style={{ transformStyle: "preserve-3d", transform: "translateZ(20px)" }}
               >
                 <div className="flex items-center gap-2 mb-4 pb-3 border-b border-card-border">

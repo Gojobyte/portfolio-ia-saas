@@ -2,14 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-interface Particle {
+interface Star {
   x: number;
   y: number;
   z: number;
-  vx: number;
-  vy: number;
-  size: number;
-  opacity: number;
+  prevZ: number;
 }
 
 export function ParticleCanvas() {
@@ -22,9 +19,11 @@ export function ParticleCanvas() {
     if (!ctx) return;
 
     let animId: number;
-    let mouse = { x: 0, y: 0 };
-    const particles: Particle[] = [];
-    const count = 80;
+    let mouse = { x: 0, y: 0, active: false };
+    const stars: Star[] = [];
+    const count = 400;
+    let speed = 0.5;
+    let targetSpeed = 0.5;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -34,83 +33,88 @@ export function ParticleCanvas() {
     window.addEventListener("resize", resize);
 
     for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        z: Math.random() * 1000,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.5 + 0.1,
+      const z = Math.random() * 1500;
+      stars.push({
+        x: (Math.random() - 0.5) * canvas.width * 3,
+        y: (Math.random() - 0.5) * canvas.height * 3,
+        z,
+        prevZ: z,
       });
     }
 
     const onMouse = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      mouse.active = true;
     };
+    const onMouseLeave = () => { mouse.active = false; };
     window.addEventListener("mousemove", onMouse);
+    window.addEventListener("mouseleave", onMouseLeave);
+
+    const onScroll = () => {
+      targetSpeed = 3;
+      setTimeout(() => { targetSpeed = 0.5; }, 200);
+    };
+    window.addEventListener("scroll", onScroll);
 
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
 
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+      // Trail effect
+      ctx.fillStyle = "rgba(5, 5, 7, 0.15)";
+      ctx.fillRect(0, 0, w, h);
 
-        // Update position
-        p.x += p.vx;
-        p.y += p.vy;
-        p.z -= 0.3;
+      speed += (targetSpeed - speed) * 0.02;
 
-        // 3D projection
-        const perspective = 800;
-        const scale = perspective / (perspective + p.z);
-        const px = (p.x - canvas.width / 2) * scale + canvas.width / 2;
-        const py = (p.y - canvas.height / 2) * scale + canvas.height / 2;
+      for (const star of stars) {
+        star.prevZ = star.z;
+        star.z -= speed;
 
-        // Mouse repulsion
-        const dx = px - mouse.x;
-        const dy = py - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          p.vx += dx * 0.0008;
-          p.vy += dy * 0.0008;
+        if (star.z <= 0) {
+          star.x = (Math.random() - 0.5) * w * 3;
+          star.y = (Math.random() - 0.5) * h * 3;
+          star.z = 1500;
+          star.prevZ = 1500;
         }
 
-        // Dampen velocity
-        p.vx *= 0.999;
-        p.vy *= 0.999;
+        // Project current position
+        const sx = (star.x / star.z) * 400 + cx;
+        const sy = (star.y / star.z) * 400 + cy;
 
-        // Wrap around
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-        if (p.z < 0) p.z = 1000;
+        // Project previous position
+        const px = (star.x / star.prevZ) * 400 + cx;
+        const py = (star.y / star.prevZ) * 400 + cy;
 
-        // Draw particle
-        const s = p.size * scale;
+        if (sx < 0 || sx > w || sy < 0 || sy > h) continue;
+
+        const size = Math.max(0, (1 - star.z / 1500) * 2.5);
+        const alpha = Math.max(0, (1 - star.z / 1500) * 0.8);
+
+        // Star trail line
         ctx.beginPath();
-        ctx.arc(px, py, s, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(129, 140, 248, ${p.opacity * scale})`;
-        ctx.fill();
+        ctx.moveTo(px, py);
+        ctx.lineTo(sx, sy);
+        ctx.strokeStyle = `rgba(140, 130, 255, ${alpha * 0.4})`;
+        ctx.lineWidth = size * 0.5;
+        ctx.stroke();
 
-        // Draw connections
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
-          const qScale = perspective / (perspective + q.z);
-          const qx = (q.x - canvas.width / 2) * qScale + canvas.width / 2;
-          const qy = (q.y - canvas.height / 2) * qScale + canvas.height / 2;
-          const d = Math.sqrt((px - qx) ** 2 + (py - qy) ** 2);
-          if (d < 150) {
-            ctx.beginPath();
-            ctx.moveTo(px, py);
-            ctx.lineTo(qx, qy);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.08 * (1 - d / 150)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
+        // Star dot
+        ctx.beginPath();
+        ctx.arc(sx, sy, size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200, 195, 255, ${alpha})`;
+        ctx.fill();
+      }
+
+      // Cursor glow
+      if (mouse.active) {
+        const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 200);
+        gradient.addColorStop(0, "rgba(99, 102, 241, 0.04)");
+        gradient.addColorStop(1, "rgba(99, 102, 241, 0)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(mouse.x - 200, mouse.y - 200, 400, 400);
       }
 
       animId = requestAnimationFrame(draw);
@@ -121,6 +125,8 @@ export function ParticleCanvas() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouse);
+      window.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -128,7 +134,6 @@ export function ParticleCanvas() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 z-0 pointer-events-none"
-      style={{ opacity: 0.6 }}
     />
   );
 }

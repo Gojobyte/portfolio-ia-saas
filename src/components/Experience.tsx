@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { GraduationCap } from "lucide-react";
+import { TiltCard } from "./TiltCard";
 
 const highlights = [
   {
@@ -27,7 +29,7 @@ const highlights = [
   {
     emoji: "⚡",
     title: "IA au quotidien",
-    desc: "Claude Code, GitHub Copilot, Hermes (LLM) et configuration de VPS pour heberger des modeles IA. Ce portfolio a ete construit avec Claude.",
+    desc: "Claude Code, GitHub Copilot, Hermes (LLM) et configuration de VPS pour heberger des modeles IA.",
   },
 ];
 
@@ -47,8 +49,11 @@ const education = [
 ];
 
 export function Experience() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+
   return (
-    <section id="parcours" className="py-32 px-6">
+    <section id="parcours" className="py-32 px-6" ref={ref} style={{ perspective: 1200 }}>
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,34 +68,40 @@ export function Experience() {
           </h2>
         </motion.div>
 
-        {/* Highlights */}
-        <div className="space-y-4 mb-20">
-          {highlights.map((h, i) => (
-            <motion.div
-              key={h.title}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="group flex gap-5 p-6 rounded-2xl glass-card hover:border-accent/20 transition-all"
-            >
-              <span className="text-2xl shrink-0 mt-0.5">{h.emoji}</span>
-              <div>
-                <h3 className="font-semibold text-lg mb-1 group-hover:text-accent-light transition-colors">
-                  {h.title}
-                </h3>
-                <p className="text-muted text-sm leading-relaxed">{h.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+        {/* 3D Highlights */}
+        <div className="space-y-5 mb-20">
+          {highlights.map((h, i) => {
+            const progress = useTransform(scrollYProgress, [0.1 + i * 0.08, 0.25 + i * 0.08], [0, 1]);
+            const x = useTransform(progress, [0, 1], [i % 2 === 0 ? -60 : 60, 0]);
+            const rotateY = useTransform(progress, [0, 1], [i % 2 === 0 ? -8 : 8, 0]);
+            const z = useTransform(progress, [0, 1], [-80, 0]);
+
+            return (
+              <TiltCard key={h.title} className="rounded-2xl" glare>
+                <motion.div
+                  style={{ x, rotateY, translateZ: z, transformStyle: "preserve-3d" }}
+                  className="group flex gap-5 p-7 rounded-2xl glass-card hover:border-accent/20 transition-all"
+                >
+                  <span className="text-3xl shrink-0 mt-0.5" style={{ transform: "translateZ(20px)" }}>{h.emoji}</span>
+                  <div style={{ transform: "translateZ(10px)" }}>
+                    <h3 className="font-semibold text-lg mb-1 group-hover:text-accent-light transition-colors">
+                      {h.title}
+                    </h3>
+                    <p className="text-muted text-sm leading-relaxed">{h.desc}</p>
+                  </div>
+                </motion.div>
+              </TiltCard>
+            );
+          })}
         </div>
 
         {/* Education */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, rotateX: 10 }}
+          whileInView={{ opacity: 1, rotateX: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
+          style={{ transformStyle: "preserve-3d" }}
         >
           <h3 className="flex items-center gap-2 text-xl font-semibold mb-8">
             <GraduationCap className="text-accent-light" size={22} />
@@ -100,13 +111,13 @@ export function Experience() {
             {education.map((e, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, x: -30, rotateY: -5 }}
+                whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
                 className="relative"
               >
-                <div className="absolute -left-[33px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent" />
+                <div className="absolute -left-[33px] top-1.5 w-3 h-3 rounded-full bg-accent shadow-[0_0_12px_var(--accent)]" />
                 <div className="text-sm text-accent-light font-mono mb-1">{e.period}</div>
                 <h4 className="font-semibold">{e.title}</h4>
                 <div className="text-muted text-sm">{e.school}</div>

@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./icons";
+import { TextScramble } from "./TextScramble";
+import { TiltCard } from "./TiltCard";
 
 function WhatsAppIcon({ size = 20 }: { size?: number }) {
   return (
@@ -24,7 +26,7 @@ export function Contact() {
         >
           <p className="text-accent-light font-mono text-sm mb-4">// contact</p>
           <h2 className="text-3xl sm:text-5xl font-bold mb-6">
-            Un projet en tete ?<br />
+            <TextScramble text="Un projet en tete ?" className="block mb-2 !font-sans text-foreground" />
             <span className="text-gradient">Discutons.</span>
           </h2>
           <p className="text-muted max-w-md mx-auto mb-12">
@@ -44,28 +46,47 @@ export function Contact() {
 
           {/* Info cards */}
           <div className="grid sm:grid-cols-3 gap-4 mb-12">
-            <a
-              href="https://wa.me/33781311541"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-5 rounded-2xl glass-card hover:border-accent/20 transition-all group"
-            >
-              <WhatsAppIcon size={22} />
-              <div className="mt-3 text-sm text-muted group-hover:text-foreground transition-colors">WhatsApp uniquement</div>
-              <div className="font-medium mt-1">07 81 31 15 41</div>
-            </a>
-
-            <div className="p-5 rounded-2xl glass-card">
-              <MapPin size={22} className="text-muted" />
-              <div className="mt-3 text-sm text-muted">Localisation</div>
-              <div className="font-medium mt-1">Ile-de-France</div>
-            </div>
-
-            <div className="p-5 rounded-2xl glass-card">
-              <Mail size={22} className="text-muted" />
-              <div className="mt-3 text-sm text-muted">Disponibilite</div>
-              <div className="font-medium mt-1">Immediate</div>
-            </div>
+            {[
+              {
+                href: "https://wa.me/33781311541",
+                icon: <WhatsAppIcon size={22} />,
+                label: "WhatsApp uniquement",
+                value: "07 81 31 15 41",
+              },
+              {
+                icon: <MapPin size={22} className="text-muted" />,
+                label: "Localisation",
+                value: "Ile-de-France",
+              },
+              {
+                icon: <Mail size={22} className="text-muted" />,
+                label: "Disponibilite",
+                value: "Immediate",
+              },
+            ].map((item, i) => (
+              <TiltCard key={i} className="rounded-2xl">
+                <motion.div
+                  initial={{ opacity: 0, y: 30, rotateY: -10 }}
+                  whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                >
+                  {item.href ? (
+                    <a href={item.href} target="_blank" rel="noopener noreferrer" className="block p-6 rounded-2xl glass-card holo-card hover:border-accent/20 transition-all group">
+                      {item.icon}
+                      <div className="mt-3 text-sm text-muted group-hover:text-foreground transition-colors">{item.label}</div>
+                      <div className="font-medium mt-1">{item.value}</div>
+                    </a>
+                  ) : (
+                    <div className="p-6 rounded-2xl glass-card">
+                      {item.icon}
+                      <div className="mt-3 text-sm text-muted">{item.label}</div>
+                      <div className="font-medium mt-1">{item.value}</div>
+                    </div>
+                  )}
+                </motion.div>
+              </TiltCard>
+            ))}
           </div>
 
           {/* Social links */}

@@ -142,8 +142,15 @@ export function Projects() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <p className="text-accent-light font-mono text-sm mb-4">// projets</p>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          <motion.p
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="text-accent-light font-mono text-sm mb-4"
+          >
+            {`// projets`}
+          </motion.p>
+          <h2 className="text-3xl sm:text-5xl font-bold mb-4">
             Des idees <span className="text-gradient">devenues realite</span>
           </h2>
           <p className="text-muted max-w-lg mx-auto mb-8">

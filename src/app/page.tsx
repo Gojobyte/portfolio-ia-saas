@@ -9,6 +9,7 @@ import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { SectionReveal, CodeDivider } from "@/components/SectionReveal";
 
 export default function Home() {
   return (
@@ -19,11 +20,26 @@ export default function Home() {
       <Navbar />
       <main className="relative z-10">
         <Hero3D />
-        <About />
-        <Projects />
-        <Skills />
-        <Experience />
-        <Contact />
+        <CodeDivider />
+        <SectionReveal>
+          <About />
+        </SectionReveal>
+        <CodeDivider />
+        <SectionReveal>
+          <Projects />
+        </SectionReveal>
+        <CodeDivider />
+        <SectionReveal>
+          <Skills />
+        </SectionReveal>
+        <CodeDivider />
+        <SectionReveal>
+          <Experience />
+        </SectionReveal>
+        <CodeDivider />
+        <SectionReveal>
+          <Contact />
+        </SectionReveal>
       </main>
       <Footer />
     </div>

@@ -43,6 +43,7 @@ html {
 
 ::-webkit-scrollbar {
   width: 4px;
+  height: 0px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -50,6 +51,10 @@ html {
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
   border-radius: 2px;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 /* Glow effect */

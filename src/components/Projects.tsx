@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { GithubIcon } from "./icons";
+import { TiltCard } from "./TiltCard";
 
 type Category = "all" | "saas" | "dashboard" | "vitrine";
 
@@ -166,12 +167,12 @@ export function Projects() {
           </div>
         </motion.div>
 
-        {/* Featured projects - large cards */}
+        {/* Featured projects - large 3D cards */}
         {filter === "all" && (
           <div className="grid md:grid-cols-3 gap-6 mb-6">
             {projects.filter((p) => p.featured).map((p, i) => (
+              <TiltCard key={p.title} className="rounded-2xl">
               <motion.a
-                key={p.title}
                 href={p.live || p.github}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -179,7 +180,7 @@ export function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative overflow-hidden rounded-2xl glass-card p-8 hover:border-accent/30 transition-all"
+                className="group relative block overflow-hidden rounded-2xl glass-card p-8 hover:border-accent/30 transition-all h-full"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 <div className="relative z-10">
@@ -196,6 +197,7 @@ export function Projects() {
                   </div>
                 </div>
               </motion.a>
+              </TiltCard>
             ))}
           </div>
         )}

@@ -1,5 +1,7 @@
 import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
+import { Hero3D } from "@/components/Hero3D";
+import { ParticleCanvas } from "@/components/ParticleCanvas";
+import { FloatingShapes } from "@/components/FloatingShapes";
 import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
 import { Projects } from "@/components/Projects";
@@ -9,10 +11,12 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <div className="noise">
+      <ParticleCanvas />
+      <FloatingShapes />
       <Navbar />
-      <main>
-        <Hero />
+      <main className="relative z-10">
+        <Hero3D />
         <About />
         <Projects />
         <Skills />
@@ -20,6 +24,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

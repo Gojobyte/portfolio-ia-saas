@@ -11,38 +11,41 @@ import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { SectionReveal } from "@/components/SectionReveal";
 import { Portal } from "@/components/Grid3D";
+import { GameOverlay } from "@/components/GameOverlay";
 
 export default function Home() {
   return (
-    <div className="noise scanline">
-      <CodeRain />
-      <CursorTrail />
-      <FloatingShapes />
-      <Navbar />
-      <main className="relative z-10">
-        <Hero3D />
-        <Portal />
-        <SectionReveal>
-          <About />
-        </SectionReveal>
-        <Portal />
-        <SectionReveal>
-          <Projects />
-        </SectionReveal>
-        <Portal />
-        <SectionReveal>
-          <Skills />
-        </SectionReveal>
-        <Portal />
-        <SectionReveal>
-          <Experience />
-        </SectionReveal>
-        <Portal />
-        <SectionReveal>
-          <Contact />
-        </SectionReveal>
-      </main>
-      <Footer />
-    </div>
+    <GameOverlay>
+      <div className="noise scanline">
+        <CodeRain />
+        <CursorTrail />
+        <FloatingShapes />
+        <Navbar />
+        <main className="relative z-10">
+          <Hero3D />
+          <Portal />
+          <SectionReveal>
+            <About />
+          </SectionReveal>
+          <Portal />
+          <SectionReveal>
+            <Projects />
+          </SectionReveal>
+          <Portal />
+          <SectionReveal>
+            <Skills />
+          </SectionReveal>
+          <Portal />
+          <SectionReveal>
+            <Experience />
+          </SectionReveal>
+          <Portal />
+          <SectionReveal>
+            <Contact />
+          </SectionReveal>
+        </main>
+        <Footer />
+      </div>
+    </GameOverlay>
   );
 }
